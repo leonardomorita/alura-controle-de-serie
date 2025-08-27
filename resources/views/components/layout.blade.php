@@ -13,7 +13,15 @@
         <div class="container-fluid">
             <a href="{{ route('series.index') }}" class="navbar-brand">Início</a>
 
-            <a href="{{ route('logout') }}">Sair</a>
+            {{-- @auth: Verifica se o usuário está autenticado --}}
+            @auth
+                <a href="{{ route('logout') }}">Sair</a>
+            @endauth
+
+            {{-- @guest: Verifica se o usuário não está autenticado --}}
+            @guest
+                <a href="{{ route('login') }}">Entrar</a>
+            @endguest
         </div>
     </nav>
 
