@@ -15,12 +15,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
+                <header class="bg-white dark:bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -29,6 +29,21 @@
 
             <!-- Page Content -->
             <main>
+                @isset($mensagemSucesso)
+                    <div class="mt-2 rounded-md border border-green-300 bg-green-50 p-4 text-sm text-green-800">
+                        {{ $mensagemSucesso }}
+                    </div>
+                @endisset
+
+                @if ($errors->any())
+                    <div class="mt-2 mb-2 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         </div>

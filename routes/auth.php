@@ -10,10 +10,8 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\EpisodeController;
-// use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SeriesController;
-// use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -62,7 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 
-
+    // Customização
 
     // Formas de implementar um grupo de rotas
 
@@ -92,4 +90,6 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/register', [UsersController::class, 'create'])->name('users.create');
     // Route::post('/register', [UsersController::class, 'store'])->name('users.store');
+
+    // Customização
 });
