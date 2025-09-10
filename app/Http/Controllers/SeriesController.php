@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\Autenticador;
+// use App\Http\Middleware\Autenticador;
 use App\Http\Requests\SeriesFormRequest;
-use App\Models\Episode;
-use App\Models\Season;
+use App\Mail\SeriesCreated;
 use App\Models\Series;
 use App\Repositories\SeriesRepository;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class SeriesController extends Controller
 {
@@ -59,6 +59,16 @@ class SeriesController extends Controller
 
         // session(['mensagem.sucesso' => 'Série adicionada com sucesso']); // Adiciona um valor na sessão, porém não é flash message, pois essa função do helper não tem
         // $request->session()->flash('mensagem.sucesso', "Série '{$series->name}' adicionada com sucesso");
+
+        // Envio de e-mail
+        // Mail::to($request->user())->send($email);
+        $users = \App\Models\User::all();
+        foreach ($users as $user) {
+            $email = new SeriesCreated($series->name, $series->id, $request->seasonQty, $request->episodePerSeason);
+
+            Mail::to($user)->send($email);
+            sleep(2);
+        }
 
         // Formas de redirecionar para uma URL utilizando o apelido da rota
         // 1
