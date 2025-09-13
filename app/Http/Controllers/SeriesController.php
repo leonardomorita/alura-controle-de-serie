@@ -63,11 +63,17 @@ class SeriesController extends Controller
         // Envio de e-mail
         // Mail::to($request->user())->send($email);
         $users = \App\Models\User::all();
-        foreach ($users as $user) {
+        foreach ($users as $index => $user) {
             $email = new SeriesCreated($series->name, $series->id, $request->seasonQty, $request->episodePerSeason);
 
-            Mail::to($user)->send($email);
-            sleep(2);
+            // Envio do e-mail de forma síncrona
+            // Mail::to($user)->send($email);
+            // sleep(2);
+
+            // Envio do e-mail de forma assíncrona
+            // Mail::to($user)->queue($email);
+            $delay = now()->addSeconds($index * 10);
+            Mail::to($user)->later($delay, $email);
         }
 
         // Formas de redirecionar para uma URL utilizando o apelido da rota
