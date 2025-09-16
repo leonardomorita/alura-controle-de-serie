@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 // use App\Http\Middleware\Autenticador;
+
+use App\Events\CreateNewSeries;
+use App\Events\SeriesCreated as EventsSeriesCreated;
 use App\Http\Requests\SeriesFormRequest;
 use App\Mail\SeriesCreated;
 use App\Models\Series;
@@ -54,27 +57,28 @@ class SeriesController extends Controller
         //     'nome' => ['required', 'min:3']
         // ]);
 
+        // Adicionar série
         // $series = $seriesRepository->add($request);
-        $series = $this->seriesRepository->add($request);
+        // $series = $this->seriesRepository->add($request);
+
+        $seriesEvent = new CreateNewSeries($request);
+        event($seriesEvent);
+        $series = $seriesEvent->series;
+        // Adicionar série
 
         // session(['mensagem.sucesso' => 'Série adicionada com sucesso']); // Adiciona um valor na sessão, porém não é flash message, pois essa função do helper não tem
         // $request->session()->flash('mensagem.sucesso', "Série '{$series->name}' adicionada com sucesso");
 
-        // Envio de e-mail
-        // Mail::to($request->user())->send($email);
-        $users = \App\Models\User::all();
-        foreach ($users as $index => $user) {
-            $email = new SeriesCreated($series->name, $series->id, $request->seasonQty, $request->episodePerSeason);
+        // Dispara um evento de envio de e-mail
+        $seriesCreatedEvent = new EventsSeriesCreated(
+            $series->name,
+            $series->id,
+            $request->seasonQty,
+            $request->episodePerSeason
+        );
 
-            // Envio do e-mail de forma síncrona
-            // Mail::to($user)->send($email);
-            // sleep(2);
-
-            // Envio do e-mail de forma assíncrona
-            // Mail::to($user)->queue($email);
-            $delay = now()->addSeconds($index * 10);
-            Mail::to($user)->later($delay, $email);
-        }
+        event($seriesCreatedEvent);
+        // Dispara um evento de envio de e-mail
 
         // Formas de redirecionar para uma URL utilizando o apelido da rota
         // 1
