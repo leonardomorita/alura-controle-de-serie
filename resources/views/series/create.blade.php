@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- <x-series.form :action="route('series.store')" button="Adicionar" :name="old('name')" /> --}}
 
-            <form action="{{ route('series.store') }}" method="POST">
+            <form action="{{ route('series.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="flex flex-wrap gap-4 mb-3">
@@ -26,6 +26,13 @@
                     <div class="w-full md:w-1/6">
                         <label for="episode-per-season" class="block text-sm font-medium text-gray-700 mb-1">{{ __('Episode per Season:') }}</label>
                         <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="episode-per-season" name="episodePerSeason" value="{{ old('episodePerSeason') }}">
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mb-3">
+                    <div class="w-full">
+                        <label for="cover">{{ __('Cover') }}</label>
+                        <input type="file" id="cover" class="block text-sm font-medium text-gray-700 mb-1" name="cover" accept="image/gif, image/jpeg, image/png">
                     </div>
                 </div>
 

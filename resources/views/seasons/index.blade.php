@@ -14,6 +14,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <ul class="divide-y divide-gray-200 rounded-md border border-gray-300 mt-3">
+                <div class="flex justify-center">
+                    <img src="{{ asset('storage/' . $series->cover) }}" alt="{{ __('Series Cover') }}" class="max-w-full h-auto rounded-md shadow" style="height: 400px">
+                </div>
+
                 @foreach ($seasons as $season)
                     <li class="flex items-center justify-between px-4 py-2">
                         <a href="{{ route('episodes.index', $season->id) }}" class="text-blue-600 hover:underline">Temporada {{ $season->season_number }}</a>
