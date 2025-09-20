@@ -110,7 +110,9 @@ class SeriesController extends Controller
         // Obter todos os parâmetros da rota
         // dd($request->route());
 
-        $series->delete();
+        if ($series->delete()) {
+            \App\Events\SeriesDestroy::dispatch($series->cover ?? '');
+        }
         // Serie::destroy($request->series);
 
         // $request->session()->put('mensagem.sucesso', 'Série removida com sucesso'); // Adicionar um valor na sessão

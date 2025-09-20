@@ -27,6 +27,9 @@ class CreateNewSeries
      */
     public function handle(EventsCreateNewSeries $event)
     {
+        $coverPath = $event->request->file('cover')->store('series_cover', 'public');
+        $event->request->coverPath = $coverPath;
+
         $series = $this->seriesRepository->add($event->request);
 
         if ($series->id) {

@@ -20,9 +20,17 @@
             <ul class="divide-y divide-gray-200 rounded-md border border-gray-300 mt-3">
                 @foreach ($series as $seriesElement)
                     <li class="flex items-center justify-between px-4 py-2">
-                        @auth <a href="{{ route('seasons.index', $seriesElement->id) }}" class="text-blue-600 hover:underline"> @endauth
-                            {{ $seriesElement->name }}
-                        @auth </a> @endauth
+                        <div class="flex items-center">
+                            @if ($seriesElement->cover)
+                                <img src="{{ asset('storage/' . $seriesElement->cover) }}" alt="{{ __('Series Cover') }}" class="max-w-full h-auto p-1 bg-white border border-gray-300 rounded-md mr-3" width="100">
+                            @else
+                                <img src="{{ asset('storage/series_cover/default.jpg') }}" alt="{{ __('Series Cover') }}" class="max-w-full h-auto p-1 bg-white border border-gray-300 rounded-md mr-3" width="100">
+                            @endif
+
+                            @auth <a href="{{ route('seasons.index', $seriesElement->id) }}" class="text-blue-600 hover:underline"> @endauth
+                                {{ $seriesElement->name }}
+                            @auth </a> @endauth
+                        </div>
 
                         @auth
                             <span class="flex space-x-2">
