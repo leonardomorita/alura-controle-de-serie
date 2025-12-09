@@ -6,11 +6,12 @@ use App\Http\Requests\SeriesFormRequest;
 use App\Models\Episode;
 use App\Models\Season;
 use App\Models\Series;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EloquentSeriesRepository implements SeriesRepository
 {
-    public function add(SeriesFormRequest $request): Series
+    public function add(SeriesFormRequest|Request $request): Series
     {
         // Obter todos os parâmetros do formulário
         $data = $request->all();
