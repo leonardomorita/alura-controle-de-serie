@@ -23,6 +23,16 @@ class Series extends Model
         return $this->hasMany(Season::class, 'series_id');
     }
 
+    /**
+     * Obtém todos os episódios de todas as temporadas de uma série.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function episodes()
+    {
+        return $this->hasManyThrough(Episode::class, Season::class);
+    }
+
     // Exemplo de escopo local
     // public function scopeActive(Builder $builder)
     // {
