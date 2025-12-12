@@ -24,7 +24,7 @@ class SeriesController extends Controller
 
     public function index(Request $request)
     {
-        $series = Series::all();
+        $series = Series::paginate(2);
         // $series = Series::query()->orderBy('nome', 'asc')->get();
         // $series = DB::select('SELECT nome FROM series;');
 

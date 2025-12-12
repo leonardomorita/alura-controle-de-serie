@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/series', SeriesController::class);
+Route::apiResource('/series', SeriesController::class)->names('api.series');
 Route::post('/series/upload-cover', [SeriesController::class, 'uploadCover']);
-Route::get('/series/{series}/seasons', [SeasonController::class, 'index']);
+Route::get('/series/{series}/seasons', [SeasonController::class, 'index'])->name('api.series.seasons.index');
 
-Route::get('/series/{series}/episodes', [EpisodeController::class, 'index']);
+Route::get('/series/{series}/episodes', [EpisodeController::class, 'index'])->name('api.series.all.episodes');
 Route::patch('/episodes/{episode}', [EpisodeController::class, 'watched']);
