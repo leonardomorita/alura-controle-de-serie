@@ -199,6 +199,11 @@ return [
          * Series Repository Service Providers...
          */
         App\Providers\SeriesRepositoryServiceProvider::class,
+
+        /*
+         * JWT Auth Service Provider...
+         */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*

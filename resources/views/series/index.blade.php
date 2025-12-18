@@ -46,6 +46,8 @@
                     </li>
                 @endforeach
             </ul>
+
+            {{ $series->links(); }}
         </div>
     </div>
 </x-app-layout>
