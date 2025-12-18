@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class SeasonController extends Controller
 {
+    public function __construct()
+    {
+        // JSON Web Token (JWT) Authentication Middleware
+        // $this->middleware('auth:api');
+    }
+
     public function index(int $series)
     {
         $series = Series::find($series);

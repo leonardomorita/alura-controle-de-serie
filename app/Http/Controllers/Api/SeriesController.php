@@ -7,12 +7,14 @@ use App\Models\Series;
 use App\Repositories\SeriesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class SeriesController extends Controller
 {
     public function __construct(private SeriesRepository $seriesRepository)
     {
-
+        // JSON Web Token (JWT) Authentication Middleware
+        // $this->middleware('auth:api');
     }
 
     public function index(Request $request)
@@ -92,8 +94,12 @@ class SeriesController extends Controller
         return response()->json(['message' => 'Série atualizada com sucesso']);
     }
 
-    public function destroy(int $series)
+    public function destroy(int $series, Authenticatable $user)
     {
+        if (!$user->tokenCan('is_admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         Series::destroy($series);
 
         return response()->noContent();
